@@ -1,0 +1,22 @@
+
+p {
+    color :green;
+}
+#elem {
+	background-color: orange;
+	background-clip: content-box;
+	border: 10px dashed black;
+	padding: 30px;
+	width: 250px;
+	height: 150px;
+}
+
+ol{
+    list-style-type: none;
+}
+
+
+#child{
+    width: 100px;
+    border: 50px;
+}
