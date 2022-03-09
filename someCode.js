@@ -1,4 +1,5 @@
-let sum = 0;
+let timerId;
+const sum = 0;
 let arr = [1,2,3];
 let result = getInt([1, 2, 3], [2, 3, 4], [4, 3, 2]);
 let arrWithLetters = ['a', 'b', 'c'];
@@ -6,20 +7,90 @@ let numbs = [-1,2,3,4,-5, 7, 8,9];
 let nums = [2,3,4,5,6]; 
 let date = new Date();
 let elem  = document.querySelector('#elem');
-let divs = document.querySelectorAll('div');
-let elem2 = document.querySelector('#elem2');
+const divs = document.querySelectorAll('div');
+const elem2 = document.querySelector('#elem2');
 let eve = nums.every(elem => elem %  2 == 0);
-let but = document.querySelector('#button');
-let foc = document.querySelector('#focus');
-let changeEvent = document.querySelector('#changeEvent');
-let input = document.querySelector('#input');
-let lii = document.querySelector('#checked');
-let modBut = document.querySelector('#elem');
-let div = document.querySelector('div');
+const but = document.querySelector('#button');
+const foc = document.querySelector('#focus');
+const changeEvent = document.querySelector('#changeEvent');
+const input = document.querySelector('#input');
+const lii = document.querySelector('#checked');
+const modBut = document.querySelector('#elem');
+const div = document.querySelector('div');
+const button = document.querySelector('button');
+const list   = document.querySelector('ul');
+const items  = list.querySelectorAll('li');
+let start = document.querySelector('#start');
+let stop  = document.querySelector('#stop');
+let parent = document.querySelector('#parent');
+
+
+function timer(){
+	let i = 0;
+
+	elem.addEventListener('click', function() {
+		setInterval(function() {
+			console.log(this.value); // будет выводится undefined
+		}, 1000);
+	});
+
+	stop.addEventListener('click', () => {
+		clearInterval(timerId);
+	});
+
+	elem.addEventListener('click', () => {
+		setTimeout(() => {
+			alert('!');
+		}, 3000);
+	})
+}
+
+
+
+function ParentFuncs(){
+	console.log(this.value);
+
+	let child = () => {
+		console.log(this.value);
+	}
+
+
+	for (let i = 1; i <= 9; i++) {
+		let p = document.createElement('p');
+		p.innerHTML = '!';
+		
+		parent.appendChild(p);
+	}
+
+	child();
+}
+
+class handler {
+	constructor() {
+		this.innerHTML = this.innerHTML + '!';
+	}
+}
+
+
+// 
+
+function NewElem(){
+	for (let item of items) {
+		item.addEventListener('click', handler);
+	}
+
+	button.addEventListener('click', function() {
+		let item = document.createElement('li');
+		item.innerHTML = 'item';
+		
+		item.addEventListener('click', handler);
+		
+		list.appendChild(item);
+	});
+}
 
 
 //clickInThisDiv
-
 
 div.addEventListener('click', function(event) {
 	if (event.target.matches('div')) {
@@ -148,9 +219,7 @@ arrWithLetters.forEach(function(elem){
     document.write(elem);
 })
 
-arrWithLetters.forEach(function(elem) {
-	sum += elem;
-});
+
 
 function func(num1, num2, num3, num4, num5) {
 	return num1 + num2 + num3 + num4 + num5;
@@ -197,6 +266,7 @@ function consoleLogs(){
 	console.log(result);
 }
 
+
 //functions_source
 
 consoleLogs();
@@ -204,4 +274,7 @@ Remove();
 disEnbl();
 radioButs();
 modButtons();
-WorkWuithLists()
+WorkWuithLists();
+NewElem();
+timer();
+ParentFuncs();
