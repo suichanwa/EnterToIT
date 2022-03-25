@@ -1,9 +1,117 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 //дроч с памятью
 
-void someRam(void){
+void choseOneOf(void){
+    int (*action)(void);    
+    int actionNumber;       
+    while(1)
+    {
+        action = select();  // получаем указатель на функцию
+        if(action==NULL)
+            break;
+        actionNumber = action(); 
+        printf("\nselected action %d \n", actionNumber);
+    }
+    printf("this is my end");
+}
+
+int action1(void)
+{
+    printf("Action 1");
+    return 1;
+}
+int action2(void)
+{
+    printf("Action 2");
+    return 2;
+}
+int action3(void)
+{
+    printf("Action 3");
+    return 3;
+}
+
+void (*selector(void)(void)){
+    int choice;
+
+    int (*actions[])() = {action1, action2, action3};
+
+    printf("Select action (1, 2, 3): ");
+    scanf("%d", &choice);
+    //retrurn one of fucntions
+    if(choice >0 && choice<4)
+        return actions[choice-1];
+    else
+        return NULL;
+}
+
+void addArraysCheck(){
+    int a[] = {3,4,5,6,7};
+    int b[] = {1,1,1,1,1};
+ 
+    int n = sizeof(a)/sizeof(a[0]);
+    int *ptr = addArrays(a, b, n);
+    for(int i=0;i<n;i++)
+        printf("%d \t", *ptr++);
+    free(ptr);
+}
+
+
+int *addArrays(int a[], int b[], int n) 
+{
+    int *ptr = calloc(n, sizeof(int)); 
+ 
+     for (int i = 0; i < n; i++) {ptr[i] = a[i] + b[i];}
+ 
+     return ptr;
+}
+
+void dynamicRam(void){
+    int **table;
+    int *row;
+
+    int rowscount,  d;
+
+    printf("Rows count=");
+    scanf("%d", &rowscount);
+
+    table = calloc(rowscount, sizeof(int*));
+    rows = malloc(sizeof(int)*rowscount);
+
+    for(int i = 0; i < rowscount; i++){
+        printf("\nColumns count for row %d=", i);
+        scanf("%d", &rows[i]);
+        table[i] = calloc(rows[i], sizeof(int));
+
+        for(int j = 0; j = rows[i]; j<++){
+            printf("table[%d][%d]=", i, j);
+            scanf("%d", &d);
+            table[i][j] = d;
+        }
+    }
+
+    printf("\n");
+
+    for(int i = 0; i < rowscount; i++){
+        prinf("%d");
+
+        for(int j = 0; j<rows[i]; j++)
+        {printf("%d \t", table[i][j]);}
+        free(table[i]);
+    }
+
+    free(table);
+    free(rows);
+
+}
+
+
+void vec(void){
+    //it works like vetors in c++
+
     int *block;
     int n;
 
@@ -11,6 +119,13 @@ void someRam(void){
     scanf("%d", &n);
 
     block = malloc(n * sizeof(int));
+    
+    for(int i = 0; i < 9; i++){
+        printf("block[%d]=", i);
+        scanf("%d", &block[i]);
+    } 
+
+    free(block);
 }
 
 //дроч с указателями
@@ -20,7 +135,7 @@ void typs(void){
     int *p;
     p = &x;
     printf("%p \n", p);     // 0060FEA8
-
+    
     char c = 'N';
     int d = 10;
     short s = 2;
@@ -92,6 +207,19 @@ void swap(int *a, int *b){
 void twice(int n, int p[]){
     for(int i=0; i<n; i++) {p[i] *=2;}
 }
+
+void twiceFuncCheck() {
+    int nums[] = {1, 2, 3, 4, 5};
+    int length = sizeof(nums)/sizeof(nums[0]);
+     
+    twice(length, nums);
+     
+    for(int i=0; i<length; i++)
+    { printf("%d \t", nums[i]);  }
+
+
+}
+
 //не указателии
 
 void factorial(int n){
@@ -126,22 +254,8 @@ int fibonachi(int n)
 
 void display() {static int i = 0; i++; printf("i = %d \n", i);};
 
-void twiceFuncCheck() {
-    int nums[] = {1, 2, 3, 4, 5};
-    int length = sizeof(nums)/sizeof(nums[0]);
-     
-    twice(length, nums);
-     
-    for(int i=0; i<length; i++)
-    { printf("%d \t", nums[i]);  }
-
-
-}
-
 int main(void)
-{
-    
-
+{   
 
     return 0;
 }
