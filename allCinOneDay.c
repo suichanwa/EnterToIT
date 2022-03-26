@@ -1,72 +1,124 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
+//structs
+
+
+
+struct time
+{
+    int hour;
+    int minute;
+    int second;
+};
+
+struct time addminutes(struct time, int);
+
+int timeTest(void){
+    struct time addminutes(struct time, int);
+     struct time current_time = {17, 38, 10};
+    int minutes = 21;
+
+    struct time result_time = addminutes(current_time, minutes);
+    printf("%d:%d:%d \n", result_time.hour, result_time.minute, result_time.second);
+
+    result_time = addminutes(current_time, 23);
+    printf("%d:%d:%d \n", result_time.hour, result_time.minute, result_time.second);
+
+    result_time = addminutes(current_time, 382);
+    printf("%d:%d:%d \n", result_time.hour, result_time.minute, result_time.second);
+    return 0;
+}
+
+struct time addminutes(struct time t, int minutes)
+{
+    struct time result ={t.hour, t.minute, t.second};
+    int h, d;
+    if(result.minute >=60)
+    {
+        h = result.minute / 60;
+        result.minute -= 60 * h;
+        result.hour +=h;
+    }
+    if(result.hour >=24)
+    {
+        d = result.hour / 24;
+        result.hour -= 24 * d;
+    }
+    return result;
+}
+
+
+struct company
+{
+    char name[20];
+    char country[30];
+};
+
+struct smartphone
+{
+    char title[20];
+    int price;
+    struct company manufacturer;
+};
+
+void workWithStructures(){
+    struct smartphone phone = {"iPhone 8", 56000, "Apple", "USA"};
+    printf("Enter phone title: ");
+    scanf("%20s", &phone.title);
+    printf("Enter price: ");
+    scanf("%d", &phone.price);
+    printf("Enter manufacturer: ");
+    scanf("%s", &phone.manufacturer.name);
+    printf("Enter country: ");
+    scanf("%s", &phone.manufacturer.country);
+}
 
 //дроч с памятью
 
-void choseOneOf(void){
-    int (*action)(void);    
-    int actionNumber;       
-    while(1)
+void display(char* format, ...)
+{
+    int d; 
+    double f;
+    va_list factor;         // указатель на необязательный параметр
+    va_start(factor, format);   // устанавливаем указатель
+     
+    for(char *c = format;*c; c++)
     {
-        action = select();  // получаем указатель на функцию
-        if(action==NULL)
-            break;
-        actionNumber = action(); 
-        printf("\nselected action %d \n", actionNumber);
+        if(*c!='%')
+        {
+            printf("%c", *c);
+            continue;
+        }
+        switch(*++c)
+        {
+            case 'd': 
+                d = va_arg(factor, int);
+                printf("%d", d);
+                break;
+            case 'f': 
+                f = va_arg(factor, double);
+                printf("%.2lf", f);
+                break;
+            default:
+                printf("%c", *c);
+        }
     }
-    printf("this is my end");
+    va_end(factor);
 }
 
-int action1(void)
+
+
+int sum(int n, ...)
 {
-    printf("Action 1");
-    return 1;
-}
-int action2(void)
-{
-    printf("Action 2");
-    return 2;
-}
-int action3(void)
-{
-    printf("Action 3");
-    return 3;
-}
-
-void (*selector(void)(void)){
-    int choice;
-
-    int (*actions[])() = {action1, action2, action3};
-
-    printf("Select action (1, 2, 3): ");
-    scanf("%d", &choice);
-    //retrurn one of fucntions
-    if(choice >0 && choice<4)
-        return actions[choice-1];
-    else
-        return NULL;
-}
-
-void addArraysCheck(){
-    int a[] = {3,4,5,6,7};
-    int b[] = {1,1,1,1,1};
- 
-    int n = sizeof(a)/sizeof(a[0]);
-    int *ptr = addArrays(a, b, n);
-    for(int i=0;i<n;i++)
-        printf("%d \t", *ptr++);
-    free(ptr);
-}
-
-
-int *addArrays(int a[], int b[], int n) 
-{
-    int *ptr = calloc(n, sizeof(int)); 
- 
-     for (int i = 0; i < n; i++) {ptr[i] = a[i] + b[i];}
- 
-     return ptr;
+    int result = 0;
+    // получаем указатель на параметр n
+    for(int *ptr = &n; n>0; n--)
+    {
+        result+= *(++ptr);
+    }
+    return result;
 }
 
 void dynamicRam(void){
@@ -79,14 +131,14 @@ void dynamicRam(void){
     scanf("%d", &rowscount);
 
     table = calloc(rowscount, sizeof(int*));
-    rows = malloc(sizeof(int)*rowscount);
+    row = malloc(sizeof(int)*rowscount);
 
     for(int i = 0; i < rowscount; i++){
         printf("\nColumns count for row %d=", i);
-        scanf("%d", &rows[i]);
-        table[i] = calloc(rows[i], sizeof(int));
+        scanf("%d", &row[i]);
+        table[i] = calloc(row[i], sizeof(int));
 
-        for(int j = 0; j = rows[i]; j<++){
+        for(int j = 0; j = row[i]; j++){
             printf("table[%d][%d]=", i, j);
             scanf("%d", &d);
             table[i][j] = d;
@@ -96,15 +148,15 @@ void dynamicRam(void){
     printf("\n");
 
     for(int i = 0; i < rowscount; i++){
-        prinf("%d");
+        printf("%d");
 
-        for(int j = 0; j<rows[i]; j++)
+        for(int j = 0; j<row[i]; j++)
         {printf("%d \t", table[i][j]);}
         free(table[i]);
     }
 
     free(table);
-    free(rows);
+    free(row);
 
 }
 
@@ -252,10 +304,11 @@ int fibonachi(int n)
     else { return fibonachi(n - 1) + fibonachi(n - 2); }
 }
 
-void display() {static int i = 0; i++; printf("i = %d \n", i);};
+void displa() {static int i = 0; i++; printf("i = %d \n", i);};
 
 int main(void)
 {   
-
+    timeTest();
+        
     return 0;
 }
