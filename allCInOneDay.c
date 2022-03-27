@@ -2,9 +2,243 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+//последния глава, работа с файлами
+
+//input from console and write this in file
+
+int saveFile(char * filename, struct person *st, int n);
+int load(char * filename);
+
+
+int write(void)
+{
+    char * filename = "/home/suichan/test.txt";
+    FILE *fp;
+    char name[20];
+    int age;
+
+    if ((fp = fopen(filename, "r")) == NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+
+    while((fscanf(fp, "%s   %d\n", &name, &age))!=EOF)
+    {
+        printf("%s      %d\n", name, age);
+    }
+    fclose(fp);
+    return 0;
+}
+
+
+
+
+//copy from one file to anoteher file
+
+int copy(void)
+{
+    char * filename1 = "/home/suichan/text.txt";
+    char * filename2 = "home/suichan/text2.txt";
+    
+    char cc[256];
+    FILE *f1 , *f2;
+
+    if((f1= fopen(filename1, "r"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+    if((f2= fopen(filename2, "w"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+
+    while((fgets(cc, 256, f1))!=NULL)
+    {
+        // записываем строку
+        fputs(cc, f2);
+        printf("%s", cc);
+    }
+
+    fclose(f1);
+    fclose(f2);
+
+    return 0;
+}
+
+
+struct person 
+{
+    char name[16];
+    int age;
+};
+
+int save(char * filename, struct person *p);
+int load(char * filename);
+
+int read(char * filename);
+
+//чтения из файла
+
+int readfromfile(void)
+{
+    char * message = "some message";
+    char * filename = "/home/suichan/some.txt";
+
+    char cc[256];
+    FILE *fp;
+
+    if((fp= fopen(filename, "w"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+
+    fputs(message, fp);
+ 
+    fclose(fp);
+
+    if((fp= fopen(filename, "r"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+    
+    while((fgets(cc, 256, fp))!=NULL)
+    {
+        printf("%s", cc);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+int save(char * filename, struct person *p)
+{
+    FILE * fp;
+    char *c;
+    int size(struct person);
+
+    if((fp = fopen(filename, "wb"))==NULL){
+        perror("erro occured while opening file");
+        return 1;
+    }
+
+    c = (char *)p;
+
+    for (int i = 0; i < size; i++)
+    {
+        putc(*c++, fp);
+    }
+
+    fclose(fp);
+    return 0;
+}
+
+int load(char * filename)
+{
+    FILE * fp;
+    char *c;
+    int m = sizeof(int);
+    int n, i;
+ 
+    // выделяем память для количества данных
+    int *pti = (int *)malloc(m);
+ 
+    if ((fp = fopen(filename, "r")) == NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+    // считываем количество структур
+    c = (char *)pti;
+    while (m>0)
+    {
+        i = getc(fp);
+        if (i == EOF) break;
+        *c = i;
+        c++;
+        m--;
+    }
+    
+    n = *pti;
+ 
+    struct person * ptr = (struct person *) malloc(n * sizeof(struct person));
+    
+    c = (char *)ptr;
+    
+    while ((i= getc(fp))!=EOF)
+    {
+        *c = i;
+        c++;
+    }
+    printf("\n%d people in the file stored\n\n", n);
+ 
+    for (int k = 0; k<n; k++)
+    {
+        printf("%-5d %-20s %5d \n", k + 1, (ptr + k)->name, (ptr + k)->age);
+    }
+ 
+    free(pti);
+    free(ptr);
+    fclose(fp);
+    return 0;
+}
+
+
+int read(char * filename)
+{
+    FILE * fp;
+    char c;
+    if((fp= fopen(filename, "r"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+    // после записи считываем посимвольно из файла
+    while((c=getc(fp))!= EOF)
+    {
+        printf("%c", c);
+    }
+     
+    fclose(fp);
+    return 0;
+}
+
+
+int write(char * filename, char message[], int n)
+{
+    FILE * fp;
+    if((fp= fopen(filename, "w"))==NULL)
+    {
+        perror("Error occured while opening file");
+        return 1;
+    }
+     
+    for(int i=0; i<n; i++)
+    {
+        putc(message[i], fp);
+    }
+     
+    fclose(fp);
+    return 0;
+}
+
+
+void files(void){
+    FILE * fp;
+    if((fp = fopen("/home/suichan/Downloads/test.txt", "r"))==NULL)
+    {
+        perror("error ocurred while opening .txt");
+        exit(0);
+    }
+    fclose(fp);
+}
+
+
 //structs
-
-
 
 struct time
 {
@@ -17,7 +251,7 @@ struct time addminutes(struct time, int);
 
 int timeTest(void){
     struct time addminutes(struct time, int);
-     struct time current_time = {17, 38, 10};
+    struct time current_time = {17, 38, 10};
     int minutes = 21;
 
     struct time result_time = addminutes(current_time, minutes);
