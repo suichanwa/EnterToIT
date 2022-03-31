@@ -1,16 +1,138 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Мир jQuery</title>
-<script src=""></script>
-</head>
-<body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="main.js"></script>
-<h2>Добро пожаловать в мир jQuery</h2>
-<button id="btn1">jQuery</button>
-<button id="btn2" onclick="alert('Мир JavaScript'); ">JavaScript</button>
-<tr class = ""></tr>
 
+<head>
+    <title>Мир jQuery</title>
+    
+    
+    <style>
+        p {
+          margin: 20px 0 0;
+        }
+        b {
+          color: blue;
+        }
+        
+        #langs p {display:none;}
+        #langs p.first {display:block;}
+
+    </style>
+
+
+
+
+</head>
+
+<body>
+    <script type="text/javascript">
+        $(function(){
+            $('button').click(function(){
+                $('#news').load('ajax.php');
+            });
+        });
+    </script>
+
+    <button onclick="ajaxload();">Загрузить</button>
+    <div id="news"><h3>Нет новостей</h3></div>
+
+    <input id="check1" type="checkbox" checked="checked">
+    <label for="check1">Check me</label>
+    <script src="ajax.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="main.js"></script>
+    <h2>Добро пожаловать в мир jQuery</h2>
+    <button id="btn1">jQuery</button>
+    <button id="btn2" onclick="alert('Мир JavaScript'); ">JavaScript</button>
+
+    <div id="menu">
+        <p><a href="1.html" class="open">Ссылка 1</a></p>
+        <p><a href="2.html" class="open">Ссылка 2</a></p>
+    </div>
+    <p><a href="3.html" class="open">Ссылка 3</a></p>
+
+    <table id="tab">
+        <tr class="tabhead">
+            <td>
+                <p>Слово</p>
+            </td>
+            <td>
+                <p>Перевод</p>
+            </td>
+        </tr>
+        <tr class ="some">
+            <td>
+                <p>table</p>
+            </td>
+            <td>
+                <p>таблица</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>apple</p>
+            </td>
+            <td>
+                <p>яблоко</p>
+            </td>
+        </tr>
+    </table>
+
+
+    <ul>
+        <li>Пункт 1</li>
+        <li>Пункт 2
+            <ul>
+                <li>Подпункт 2.1</li>
+                <li>Подпункт 2.2</li>
+            </ul>
+        </li>
+        <li>Пункт 3</li>
+    </ul>
+
+
+    <ul class="menu">
+        <li>Пункт 1</li>
+        <li>Пункт 2
+            <ul class="submenu">
+                <li>Подпункт 2.1</li>
+                <li>Подпункт 2.2</li>
+            </ul>
+        </li>
+        <li>Пункт 3
+            <ul class="submenu">
+                <li>Подпункт 3.1</li>
+                <li>Подпункт 3.2</li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul>
+        <li class="lang">Java</li>
+        <li class="lang">C/C++</li>
+        <li class="lang">PHP</li>
+    </ul>
+
+    <ul>
+        <li>Java</li>
+        <li>C/C++</li>
+        <li>JavaScript</li>
+    </ul>
+
+    <button id="show">Hide</button>
+    <button id="hide">Show</button>
+
+    
+    <div id="langs">
+        <p class='first'>Java</p>
+        <p>C/C++</p>
+        <p>PHP</p>
+        <p class='last'>JavaScript</p>
+    </div>
+
+    <button id="prev">Назад</button>
+    <button id="next">Вперед</button>       
+
+    
 </body>
+
 </html>
