@@ -115,3 +115,64 @@ $(function(){
 
 //slide realistaion
 
+$(function(){
+    $('#slideUp').click(function(){
+         $(this).slideUp();
+         $(this).slideToggle('slow');
+    });
+    $('#slideDown').click(function(){
+         $('#slideUp').slideDown();
+         $('#slideUp').slideToggle(2000);
+    });
+});
+
+$(function () { 
+    $('#ars').click(function(){
+        $('#fadeIn').click(function(){
+            $('#ars').fadeIn('slow', function(){alert('Отображено');});
+        });
+    })
+    
+    $('#fadeOut').click(function(){
+        $('#ars').fadeOut(2000, function(){alert('Скрыто');});
+   });
+})
+
+//fade
+
+$(function(){
+   $('#ars').fadeTo(500,0.6);
+
+   $('#fadeIn').click(function(){
+        $('#ars').fadeIn('slow', function(){alert('Отображено');});
+    });
+
+    $('#fadeOut').click(function(){
+        $('#ars').fadeOut(2000, function(){alert('Скрыто');});
+   });
+});
+
+//animate method
+
+$(function(){
+    $('#anim').click(function(){
+        $('#ars').animate({
+            opacity:0.25,
+            'margin-right': '50',
+            'margin-left': '+=50',
+            width: '-=10',
+            height: '200'
+            },{
+                duration: 1000,
+                step:function(now, fx){
+                    var data = fx.elem.ud + '' + fx.prop + ': ' + now;
+                    $('body').append('<div>' + data + '</div>');
+                },
+                complete: function(){
+                    console.log("animatio was ended");
+                }
+            }
+        );
+    })
+})
+

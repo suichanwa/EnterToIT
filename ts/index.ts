@@ -1,4 +1,3 @@
-import helloWorld from "./hello.js";
 import { pi, phi, absolute } from "./math.js";
 
 console.log(pi);
@@ -18,7 +17,6 @@ let time: [number, number, number] = [12, 59, 59];
 time[0] = 1;
 console.log(time);
 
-user[0] = 'another';
 console.log(user);
 
 function func(test: string): void {
