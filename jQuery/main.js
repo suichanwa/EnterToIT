@@ -6,12 +6,8 @@ $(function(){
 });
 
 $(function(){
-    $("#tab .some").css('background-color', 'silver');
-
-});
-
-$(function(){
     $(".open", "div#menu").css("background-color", "red");
+    $("#tab .some").css('background-color', 'silver');
 });
 
 
