@@ -15,7 +15,6 @@
             if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
             
             elmnt.removeAttribute("include-html");
-            includeHTML();
           }
         }      
         xhttp.open("GET", file, true);
