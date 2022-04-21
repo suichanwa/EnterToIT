@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
+    <link rel="stylesheet" href="styles.css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -12,12 +13,24 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
 
-    <div id="app">
-      <input type="text" v-on:input="setMessage" />
-      <p>{{message}}</p>
-    </div>
+    
 
     <div id="user_data">
+      <h2 ref="header">Hello world!</h2>
+      <p v-if="visible">Первый параграф</p>
+      <p>Второй параграф</p>
+      <button v-on:click="visible=!visible">{{visible?'Скрыть':'Показать'}}</button>
+      <div>
+        <span v-for="n in 10">{{ n }} </span>
+      </div>
+      <some-thing></some-thing>
+      <select v-model.lazy="selectedUsers" multiple>
+        <option v-for="user in users" v-bind:value="user">{{user.name}}</option>
+   </select>
+   <h3>Выбранные объекты</h3>
+   <ul>
+       <li v-for="user in selectedUsers">{{user.name}} - {{user.age}}</li>
+   </ul>
       <!--
       <button v-on:click="counter++">+</button>
       <button v-on:click="if(counter>0) counter--;">-</button>
@@ -29,20 +42,28 @@
       <div>{{counter}}</div>
       -->
     </div>
+  
+    <div id="classes">
+      <div class="region" v-bind:class="{active: isActive}" v-on:click="isActive=!isActive"></div>
+      <div class="region"></div>
 
-    
-  <div id="counter">
-    <button v-on:click="inc(3,$event)"></button>
-    <button v-on:click="dec(3,$event)"></button>
-    <div>{{cout}}</div>
-  </div>
+      <button v-on:click="isActive=!isActive">Toggle color</button>
+      <button v-on:click="isBounded=!isBounded">Toggle border</button>
+    </div>
 
-  <div id="app2">
-    <input type="text" v-model="name" />
-    <input type="text" v-model="age" />
-    <p>Имя: {{name}}   Возраст {{age}}</p>
-    <p>{{checkAge()}}</p>
-  </div>
+    <div id="watch">
+      <p>enter some number:<input v-model="number"></p>
+      <p>{{ result }}</p>
+    </div>
+
+    <div id="_app">
+      <message-container message="wow"></message-container>
+      <h2>{{name}}</h2>
+      <useredit-ed :user="userName"></useredit-ed>
+      <button v-on:click="resetName">Set Name</button>
+          {{message | someshit }}
+    </div>
+
 
   </body>
 </html>
