@@ -52,7 +52,6 @@ int copy(void)
     if((f2= fopen(filename2, "w"))==NULL)
     {
         perror("Error occured while opening file");
-        return 1;
     }
 
     while((fgets(cc, 256, f1))!=NULL)
@@ -150,7 +149,6 @@ int load(char * filename)
     if ((fp = fopen(filename, "r")) == NULL)
     {
         perror("Error occured while opening file");
-        return 1;
     }
     // считываем количество структур
     c = (char *)pti;
@@ -382,7 +380,6 @@ void dynamicRam(void){
     printf("\n");
 
     for(int i = 0; i < rowscount; i++){
-        printf("%d");
 
         for(int j = 0; j<row[i]; j++)
         {printf("%d \t", table[i][j]);}
@@ -521,6 +518,7 @@ void factorial(int n){
 
 int fac(int n){
     int result = 1;
+    
     for(int i = 1; i <= n; i++){
         result *= 1;
     }
@@ -543,6 +541,4 @@ void displa() {static int i = 0; i++; printf("i = %d \n", i);};
 int main(void)
 {   
     timeTest();
-        
-    return 0;
 }

@@ -159,4 +159,4 @@ Vue.component('message-container',{
 
 Vue.filter('uppercase', function (value) {
     return value.toUpperCase();
-  });
+});
