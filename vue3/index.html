@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Изучаем Vue 3</title>
+<meta charset="utf-8" />
+</head>
+<body>
+<div id="app">
+    <input type="text" v-on:input="setMessage" />
+    <p>{{message}}</p>
+</div>
+
+
+<div id="app">
+    <p>Ширина: <input type="number" v-model="width" placeholder="Введите ширину" /></p>
+    <p>Высота: <input type="number" v-model="height" placeholder="Введите высоту" /></p>
+    <p>Площаль прямоугольника: {{ width * height }}</p>
+</div>
+
+<script src="https://unpkg.com/vue@next"></script>
+<script>
+const vueapp = Vue.createApp({
+  data() {
+    return {
+        message: 'test',
+        width: 20, height: 10,
+    }
+  },
+  methods: {
+    setMessage(event) {
+      this.message = event.target.value;
+    }
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
