@@ -44,12 +44,12 @@ int copy(void)
     char cc[256];
     FILE *f1 , *f2;
 
-    if((f1= fopen(filename1, "r"))==NULL)
+    if((f1 = fopen(filename1, "r"))==NULL)
     {
         perror("Error occured while opening file");
         return 1;
     }
-    if((f2= fopen(filename2, "w"))==NULL)
+    if((f2 = fopen(filename2, "w"))==NULL)
     {
         perror("Error occured while opening file");
     }
@@ -62,7 +62,6 @@ int copy(void)
     }
 
     fclose(f1);
-    fclose(f2);
 
     return 0;
 }
