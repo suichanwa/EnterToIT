@@ -37,7 +37,7 @@ export default {
       e.preventDefault()
 
       if (!this.text) {
-        alert('Please add a task')
+        alert(' add  task')
         return
       }
 
