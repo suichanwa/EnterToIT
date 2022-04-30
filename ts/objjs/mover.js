@@ -10,7 +10,7 @@ class Mover {
       let mouse = createVector(mouseX, mouseY);
       this.acc = p5.Vector.sub(mouse, this.pos);
       this.acc.setMag(1);
-  
+      
       this.vel.add(this.acc);
       this.vel.limit(5);
   
