@@ -9,13 +9,12 @@ app.use('/js', express.static(__dirname + 'public/js'))
 
 app.get('*', (req, res) => {
     res.sendFile(__dirname +'public/index.html');
-})
+}) 
 
 app.listen(port, () => console.info('liseting to http://localhost:3000/'));
 
 var jsdom = require('jsdom');
 $ = require('jquery')(new jsdom.JSDOM().window);
-
 
 $(function() {
     $('button').bind('click', function(){
