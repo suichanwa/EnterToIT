@@ -1,0 +1,14 @@
+{
+  "name": "chrome-ext",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "crx-hotreload": "^1.0.6",
+    "tailwindcss": "^3.0.24"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "postcss-import": "^14.1.0"
+  }
+}
