@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const autoprefixer = require('gulp-autoprefixer');
 const { src, dest } = require('gulp');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
@@ -16,8 +15,8 @@ const paths = {
 async function includeHTML() {
     return gulp.src([
             '*.html',
-            '!header.html', // ignore
-            '!footer.html' // ignore
+            '!header.html',  
+            '!footer.html'  
         ])
         .pipe(fileinclude({
             prefix: '@@',

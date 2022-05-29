@@ -1,0 +1,7 @@
+{
+    "require": {
+        "phpunit/php-timer": "^5.0",
+        "jpgraph/jpgraph": "^4.0",
+        "brick/math": "^0.9.3"
+    }
+}

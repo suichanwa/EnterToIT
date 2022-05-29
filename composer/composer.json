@@ -1,0 +1,18 @@
+{
+    "type": "template",
+    "description": "A project template to make creating new (type goes here) projects easier.",
+    "keywords": ["template"],
+    "homepage": "https://url-of.project.repository",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joe Bloggs",
+            "email": "joe.bloggs@gmail.com",
+            "homepage": "https://blog.joe-bloggs.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "brick/math": "^0.9.3"
+    }
+}
