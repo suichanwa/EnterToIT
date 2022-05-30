@@ -1,0 +1,33 @@
+<?php
+$person = new Person();
+$person->name = 'John';
+$person->age = 30;
+print $person->name . ' is ' . $person->age . ' years old.';
+
+
+
+class Person {
+    public $name;
+    public $age;
+
+    function __construct() {
+        $this->name = 'another name';
+        $this->age = 30;
+    }
+}
+
+
+class Users{
+    public $name, $age;
+
+    function showUsers(){
+        echo '<h1>Users</h1>';
+    }
+}
+
+$tom = new Users();
+$tom->name = 'Tom';
+$tom->showUsers();
+$tom->age(34);
+print($tom->age);
+?>
