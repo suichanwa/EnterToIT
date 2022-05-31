@@ -30,6 +30,23 @@
 
 
 <?php
+session_start();
+echo session_id();
+echo session_name();
+echo $_COOKIE["PHPSESSION"];
+
+
+//create a PDO database
+try{
+    $db = new PDO('mysql:host=localhost;dbname=test', 'root', '');
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e){
+    echo $e->getMessage();
+}
+
+
+
 
 if(isset($_POST['users'])){
     $firstname = $_POST['firstname'];

@@ -1,6 +1,8 @@
 <?php
 
-
+include('model/intrefasce.php');
+include('model/traits.php');
+include('model/realisation.php');
 
 class Oop {
     private $privateA = 'privateA';
@@ -8,10 +10,6 @@ class Oop {
     protected $protectedA = 'protectedA';
 
     private $sum = 0;
-
-    private function getPrivateMethod(){
-        return 'privateMethod';
-    }
 
     protected function getProtectedMethod(){
         return 'protectedMethod';
@@ -42,7 +40,41 @@ class Oop {
     function printSum(){
         echo $this->sum;
     }
+
+    //create a function that check if number is possitive
+    function isPossitive($number){
+        if($number > 0){
+            return true;
+        }
+        return false;
+    }
+
+    function __destruct(){
+        echo 'destructor';
+    } 
 }
+
+function select($n): callable{
+    switch($n){
+        case 1: return function($a, $b) {return $a + $b;}; 
+        case 2: return function($a, $b) {return $a - $b;};
+        case 3: return function($a, $b) {return $a * $b;};
+        default: return function($a, $b) {return $a . " " . $b;};
+    }
+}
+$selection = select(2);
+echo $selection(4,5);   // -1
+
+class Node{
+     
+    function generate() : static{
+        return new Node();
+    }
+}
+
+$node1 = new Node();
+$node2 = $node1->generate();
+
 
 function AccSum(){
     $oop = new Oop(100);
@@ -152,10 +184,15 @@ class Main{
     }
 }
 
-$main = new Main();
-$main -> __construct();
+//$main = new Main();
+//$main -> __construct();
 
+class printText{
+    use Printer;
+}
 
+$printex = new printText();
+$printex->printText("\r\n helo from trait \r\n");
 
 
 ?>
