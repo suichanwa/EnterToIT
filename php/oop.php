@@ -1,5 +1,6 @@
 <?php
 
+
 include('model/intrefasce.php');
 include('model/traits.php');
 include('model/realisation.php');
@@ -193,6 +194,11 @@ class printText{
 
 $printex = new printText();
 $printex->printText("\r\n helo from trait \r\n");
+
+
+
+
+
 
 
 ?>

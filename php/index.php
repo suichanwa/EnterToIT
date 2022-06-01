@@ -36,7 +36,6 @@ echo session_name();
 echo $_COOKIE["PHPSESSION"];
 
 
-//create a PDO database
 try{
     $db = new PDO('mysql:host=localhost;dbname=test', 'root', '');
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -44,8 +43,6 @@ try{
 catch(PDOException $e){
     echo $e->getMessage();
 }
-
-
 
 
 if(isset($_POST['users'])){
@@ -67,7 +64,6 @@ if(isset($_POST['technologies'])){
     }
 }
 
-//create a fucntion that will send user to fileUpload.php
 function redirect($file){
     header("Location: $file");
 }
@@ -75,9 +71,7 @@ function redirect($file){
 redirect('fileUpload.php');
 
 function uploadFile($file){
-    //check if file is uploaded
     if(is_uploaded_file($file['tmp_name'])){
-        //move file from temp location to the folder
         move_uploaded_file($file['tmp_name'], 'uploads/' . $file['name']);
     }
 }
