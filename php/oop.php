@@ -195,10 +195,4 @@ class printText{
 $printex = new printText();
 $printex->printText("\r\n helo from trait \r\n");
 
-
-
-
-
-
-
 ?>
