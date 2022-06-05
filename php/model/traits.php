@@ -12,6 +12,4 @@ trait Printer{
     }
 }
 
-
-
 ?>

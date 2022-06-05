@@ -23,8 +23,6 @@
     <input type="submit" value="Отправить">
 </form>
 
-
-
 </body>
 </html>
 
