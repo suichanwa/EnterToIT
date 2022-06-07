@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/suisui/git/EnterToIT'
+make: Leaving directory '/home/suisui/git/EnterToIT'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
