@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun  7 11:27:31 2022
+# Make data base, printed on Wed Jun  8 22:15:26 2022
 
 # Variables
 
@@ -19,13 +19,15 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-I3SOCK = /run/user/1001/sway-ipc.1001.1623.sock
+TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1001/vscode-ipc-f83fea76-4cca-4521-8a86-9d1a10922300.sock
+I3SOCK = /run/user/1001/i3/ipc-socket.779
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1001/vscode-ipc-ea4c1cac-e03b-47e4-83a9-f9dd4d964174.sock
 # environment
 VSCODE_CWD = /home/suisui/git/EnterToIT
 # environment
-SWAYSOCK = /run/user/1001/sway-ipc.1001.1623.sock
+TERMINATOR_UUID = urn:uuid:6805ddab-4579-44c0-bbe1-5ad7ba1305c4
 # default
 MAKE_COMMAND := make
 # automatic
@@ -52,12 +54,16 @@ VSCODE_LOG_STACK = false
 VSCODE_CODE_CACHE_PATH = /home/suisui/.config/Code/CachedData/57fd6d0195bb9b9d1b49f6da5db789060795de47
 # environment
 LANG = C
+# environment
+XAUTHORITY = /home/suisui/.lyxauth
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
+# environment
+TERMINATOR_DBUS_PATH = /net/tenshu/Terminator2
 # makefile
 CURDIR := /home/suisui/git/EnterToIT
 # environment
@@ -76,8 +82,6 @@ _ble_util_fd_null = 33
 MFLAGS = -pqrR
 # default
 .SHELLFLAGS := -c
-# environment
-WAYLAND_DISPLAY = wayland-1
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # makefile
@@ -87,9 +91,9 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 171205
+VSCODE_PID = 14966
 # environment
-XDG_SESSION_TYPE = wayland
+XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -147,6 +151,8 @@ XDG_VTNR = 2
 # environment
 DISPLAY = :0
 # environment
+GTK_MODULES = canberra-gtk-module
+# environment
 USER = suisui
 # default
 MAKE_VERSION := 4.3
@@ -167,13 +173,11 @@ ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK = /run/user/1001/vscode-d4212f70-1.67.0-main.sock
 # environment
-TERM = foot
+TERM = xterm-256color
 # environment
 XDG_SESSION_ID = 1
 # environment
 _ble_util_fd_stderr = 32
-# environment
-XCURSOR_SIZE = 24
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -184,12 +188,14 @@ SUFFIXES :=
 VSCODE_CLI = 1
 # environment
 ELECTRON_NO_ATTACH_CONSOLE = 1
+# environment
+VTE_VERSION = 6800
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
 # environment
 DOTNET_ROOT = /usr/share/dotnet
 # variable set hash-table stats:
-# Load=88/1024=9%, Rehash=0, Collisions=3/115=3%
+# Load=91/1024=9%, Rehash=0, Collisions=4/118=3%
 
 # Pattern-specific Variable Values
 
@@ -197,9 +203,9 @@ DOTNET_ROOT = /usr/share/dotnet
 
 # Directories
 
-# . (device 26, inode 1058263): 47 files, no impossibilities.
+# . (device 25, inode 1058263): 28 files, no impossibilities.
 
-# 47 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -249,12 +255,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 55 / storage = 556 B / avg = 10 B
-# current buf: size = 8162 B / used = 556 B / count = 55 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 36 / storage = 356 B / avg = 9 B
+# current buf: size = 8162 B / used = 356 B / count = 36 / avg = 9 B
 
-# strcache performance: lookups = 58 / hit rate = 5%
+# strcache performance: lookups = 39 / hit rate = 7%
 # hash-table stats:
-# Load=55/8192=1%, Rehash=0, Collisions=0/58=0%
-# Finished Make data base on Tue Jun  7 11:27:31 2022
+# Load=36/8192=0%, Rehash=0, Collisions=0/39=0%
+# Finished Make data base on Wed Jun  8 22:15:26 2022
 
  

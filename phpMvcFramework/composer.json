@@ -1,0 +1,21 @@
+{
+    "name": "suisui/php-mvc-framework",
+    "autoload": {
+        "psr-4": {
+            "Suisui\\PhpMvcFramework\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "suichanwa",
+            "email": "augustinnegura746@gmail.com"
+        }
+    ],
+
+    "auto-load": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "require": {}
+}

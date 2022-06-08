@@ -3,6 +3,7 @@
         "phpunit/php-timer": "^5.0",
         "intervention/image": "^2.7",
         "fzaninotto/faker": "^1.5",
-        "guzzlehttp/guzzle": "^7.0"
+        "guzzlehttp/guzzle": "^7.0",
+        "seld/jsonlint": "^1.9"
     }
 }

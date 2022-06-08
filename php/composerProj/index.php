@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/fzaninotto/faker/src/autoload.php';
 
 include "namespaces.php";
 
-use base;
+use Seld\JsonLint\JsonParser;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use Intervention\Image\ImageManager;
@@ -38,8 +38,6 @@ $client = new Client([
     'timeout'  => 2.0,
 ]);
 
-$SomeClass = new SomeClass();
-$SomeClass->someMethod();
 
 
 ?>
