@@ -1,8 +1,8 @@
 {
-    "name": "suisui/php-autoload",
+    "name": "suisui/phpautoload",
     "autoload": {
         "psr-4": {
-            "Suisui\\PhpAutoload\\": "src/"
+            "Suisui\\Phpautoload\\": "src/"
         }
     },
     "authors": [

@@ -6,5 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Suisui\\PhpAutoload\\' => array($baseDir . '/src'),
+    'Suisui\\Phpautoload\\' => array($baseDir . '/src'),
 );
