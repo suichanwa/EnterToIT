@@ -1,8 +1,8 @@
 {
-    "name": "suisui/php-mvc-framework",
+    "name": "suisui/php-autoload",
     "autoload": {
         "psr-4": {
-            "Suisui\\PhpMvcFramework\\": "src/"
+            "Suisui\\PhpAutoload\\": "src/"
         }
     },
     "authors": [
@@ -11,11 +11,5 @@
             "email": "augustinnegura746@gmail.com"
         }
     ],
-
-    "auto-load": {
-        "psr-4": {
-            "app\\": "./core"
-        }
-    },
     "require": {}
 }
