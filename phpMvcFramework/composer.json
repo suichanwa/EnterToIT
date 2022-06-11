@@ -2,7 +2,7 @@
     "name": "suisui/php-mvc-framework",
     "autoload": {
         "psr-4": {
-            "Suisui\\PhpMvcFramework\\": "src/"
+            "app\\": "src/"
         }
     },
     "authors": [
