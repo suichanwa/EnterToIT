@@ -1,6 +1,12 @@
 <?php
 include('core/Route.php');
+include('core/Model.php');
+
+
 use core\Route;
+use core\Track;
+use core\Page;
+use core\Model;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -21,10 +27,8 @@ spl_autoload_register(function ($class) {
 });
 
 
-
-
-$track = (new Route('/', 'home', 'index'))->__get('path');
-
+//realization class Model
+$model = new Model();
 
 
 ?>

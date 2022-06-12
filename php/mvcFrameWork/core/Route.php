@@ -1,7 +1,7 @@
 <?php
 
 namespace core;
-
+use core\Track;
 
 class Route{
     private $path;
@@ -16,6 +16,11 @@ class Route{
 
     public function __get($path){
         return $this->$path;
+    }
+
+    public function getTrack(){
+        $track = new Track($this->controller, $this->action, $this->params);
+        return $track; 
     }
 }
 

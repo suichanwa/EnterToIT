@@ -19,7 +19,7 @@ class Track{
 
     public function getTrack($routes, $uri){
 
-        foreach ($routes as $route) {
+        foreach ($routes as $route){
             if($route->path == $uri){
                 $this->controller = $route->controller;
                 $this->action = $route->action;
@@ -27,6 +27,8 @@ class Track{
                 return true;
             }
         }
+
+        return static::getTrack($routes, '404');
     }
 }
 
