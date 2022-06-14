@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Jun  8 22:15:26 2022
+# Make data base, printed on Tue Jun 14 12:23:49 2022
 
 # Variables
 
@@ -21,13 +21,13 @@ NO_AT_BRIDGE = 1
 # environment
 TERMINATOR_DBUS_NAME = net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873
 # environment
-I3SOCK = /run/user/1001/i3/ipc-socket.779
+I3SOCK = /run/user/1001/i3/ipc-socket.1629
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1001/vscode-ipc-ea4c1cac-e03b-47e4-83a9-f9dd4d964174.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1001/vscode-ipc-a5bc41b0-bd62-48f8-8558-e65c9642aef0.sock
 # environment
 VSCODE_CWD = /home/suisui/git/EnterToIT
 # environment
-TERMINATOR_UUID = urn:uuid:6805ddab-4579-44c0-bbe1-5ad7ba1305c4
+TERMINATOR_UUID = urn:uuid:5c8c0ef2-e52c-4782-9fa5-6b13971c0ede
 # default
 MAKE_COMMAND := make
 # automatic
@@ -43,7 +43,7 @@ PWD = /home/suisui/git/EnterToIT
 # environment
 MAIL = /var/spool/mail/suisui
 # environment
-OLDPWD = /home/suisui/git
+OLDPWD = /home/suisui
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
@@ -91,7 +91,7 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 14966
+VSCODE_PID = 15110
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -203,9 +203,9 @@ DOTNET_ROOT = /usr/share/dotnet
 
 # Directories
 
-# . (device 25, inode 1058263): 28 files, no impossibilities.
+# . (device 26, inode 1058263): 29 files, no impossibilities.
 
-# 28 files, no impossibilities in 1 directories.
+# 29 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -255,12 +255,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 356 B / avg = 9 B
-# current buf: size = 8162 B / used = 356 B / count = 36 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 37 / storage = 368 B / avg = 9 B
+# current buf: size = 8162 B / used = 368 B / count = 37 / avg = 9 B
 
-# strcache performance: lookups = 39 / hit rate = 7%
+# strcache performance: lookups = 40 / hit rate = 7%
 # hash-table stats:
-# Load=36/8192=0%, Rehash=0, Collisions=0/39=0%
-# Finished Make data base on Wed Jun  8 22:15:26 2022
+# Load=37/8192=0%, Rehash=0, Collisions=0/40=0%
+# Finished Make data base on Tue Jun 14 12:23:49 2022
 
  
