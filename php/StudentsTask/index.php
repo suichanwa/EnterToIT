@@ -2,9 +2,11 @@
 require 'database.php';
 
 
+
+
 if($_POST['submit']){
     $key = $_POST['key'];
-    $query = $pdo->prepare("SELECT * FROM users WHERE username LIKE '%$key%'");
+    $query = $pdo->prepare("SELECT * FROM students WHERE username LIKE '%$key%'");
     $query->bindValue(':key', $key, PDO::PARAM_STR);
     $query->execute();
     $result = $query->fetchAll();
