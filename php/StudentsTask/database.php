@@ -9,7 +9,7 @@ $conn = new mysqli($server, $user, $pass, $db);
 if($conn->connect_error){
     die('Connection failed: ' . $conn->connect_error);
 } else {
-    echo 'Connected successfully'; 
+    //echo 'Connected successfully'; 
 }
 
 
@@ -19,6 +19,6 @@ try{
     echo "Connected successfully " . $db;
 }
 catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
+    //echo 'Connection failed: ' . $e->getMessage();
 }
 

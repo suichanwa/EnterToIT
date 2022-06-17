@@ -1,26 +1,4 @@
-<form method="post">
-    <p>User Name:
-    <input type="text" name="username" /></p>
-    <p>User Age:
-    <input type="number" name="userage" /></p>
-    <input type="submit" value="Save">
-</form>
-
-
 <?php
-
-
-$conn = new mysqli("localhost", "root", "", "testfromsql");
-$sql = 'SELECT * FROM testfromsql';
-
-$result = mysqli_query($conn, $sql);
-
-while($row = mysqli_fetch_assoc($result)){
-    echo $row['name'] . ' ' . $row['age'] . '<br>';
-}
-
-
-
 
 if(isset($_POST['username']) && isset($_POST['userage'])){
     $username = $_POST['username'];
@@ -30,17 +8,16 @@ if(isset($_POST['username']) && isset($_POST['userage'])){
         $db = new PDO('mysql:host=localhost;dbname=testfromsql', 'root', '');
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->exec("SET NAMES 'utf8'");
-        $sql = "INSERT INTO testfromsql.Users (name, age) VALUES ('$username', '$userage')";
-        $db->exec($sql);
+        //$sql = "INSERT INTO testfromsql.Users (name, age) VALUES ('$username', '$userage')";
+        //$db->exec($sql);
     }
     catch(PDOException $e){
         echo $sql . "<br>" . $e->getMessage();
     }
 }
 
-//if user have been added successfully, show message
 if(isset($_POST['username']) && isset($_POST['userage'])){
-    echo 'User has been added successfully';
+    //echo 'User has been added successfully';
 }
 
 
@@ -53,27 +30,67 @@ function print_r_html($data) {
 
 
 
-try {
-    $conn = new PDO("mysql:host=localhost;dbname=testfromsql", "root", "", );
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    //$sql = "CREATE DATABASE IF NOT EXISTS `testfromsql`";
-    /*$sql = "CREATE TABLE IF NOT EXISTS `testfromsql` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) NOT NULL,
-        `email` varchar(255) NOT NULL,
-        `password` varchar(255) NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8";
-    */
-    //$sql = "INSERT INTO testfromsql (name, email, password) VALUES ('John', 'email@com.test', 'password')";
 
-    //$conn->exec($sql);
+$conn = new mysqli("localhost", "root", "", "users");
+$sql = 'SELECT * FROM Users';
 
-    print_r_html("Database created successfully");
-}
-catch(PDOException $e){
-    echo "Connection failed: " . $e->getMessage();
-}
-
+$result = mysqli_query($conn, $sql);
 ?>
+
+<form method="GET" name="">
+	<table>
+		<tr>
+			<td><input type="text" name="k" value="<?php echo isset($_GET['k']) ? $_GET['k'] : ''; ?>" placeholder="Enter your search keywords" /></td>
+			<td><input type="submit" name="" value="Search" /></td>
+		</tr>
+	</table>
+</form>
+
+
+
+<?php
+if (isset($_POST["username"]) && isset($_POST["userage"])) {
+     
+    try {
+        $conn = new PDO("mysql:host=localhost;dbname=users", "root", "mypassword");
+        $sql = "INSERT INTO Users (name, age) VALUES (:username, :userage)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(":username", $_POST["username"]);
+        $stmt->bindValue(":userage", $_POST["userage"]);
+        $affectedRowsNumber = $stmt->execute();
+        if($affectedRowsNumber > 0 ){
+            echo "Data successfully added: name=" . $_POST["username"] ."  age= " . $_POST["userage"];  
+        }
+
+        $sql = "SELECT * FROM Users";
+        $result = $conn->query($sql);
+
+
+
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Name</th><th>Age</th></tr>";
+        while($row = $result->fetch()) {
+            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["age"] . "</td></tr>";
+        }
+    }
+    catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
+    }
+}
+?>
+
+
+
+
+
+
+<form method="post">
+    <p>User Name:
+    <input type="text" name="username" /></p>
+    <p>User Age:
+    <input type="number" name="userage" /></p>
+    <input type="submit" value="Save">
+</form>
+
+

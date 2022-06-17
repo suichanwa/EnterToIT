@@ -1,55 +1,43 @@
-<?php
-require 'database.php';
-
-
-
-
-if($_POST['submit']){
-    $key = $_POST['key'];
-    $query = $pdo->prepare("SELECT * FROM students WHERE username LIKE '%$key%'");
-    $query->bindValue(':key', $key, PDO::PARAM_STR);
-    $query->execute();
-    $result = $query->fetchAll();
-    $rows = $query->rowCount();
-}
-
-?>
-
-
-
-<form action="foo.php" method="post">
-    <input type="text" name="foo" value="bar" />
-    <input type="submit" value="Submit" />
+<!--creaet registration form
+-->
+<form action="index.php" method="post">
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" />
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" />
+    <input type="submit" value="Login" />
 </form>
 
-
-<div>
-    <?php
-    if($rows > 0){
-        foreach($result as $row){
-            echo $row['username'] . '<br>';
-        }
-    }
-    ?>
-</div>
-
-
 <?php
+session_start();
 
+require 'database.php';
 ini_set('display_errors', 1);
 
+$conn = new PDO("mysql:host=$server;dbname=$db", $user, $pass);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-class Student{
-    public string $name = 'someName';
-    public int $age  = 12;
+if(!empty($_POST)){
+    $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+    $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+    
+    
+    $stmt = $conn->prepare("SELECT * FROM students WHERE username = :username AND password = :password");
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':password', $password);
+    $stmt->execute();
+    
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if($result){
+        echo 'You are logged in';
+    } else {
+        echo 'You are not logged in';
+    }
 }
 
-$student = new Student();
 
-if(isset($_POST['name'])){
-    $student->name = $_POST['name'];
-}
-
+$strSql = "SELECT * FROM students";
 
 
 ?>
