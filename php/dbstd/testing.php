@@ -2,7 +2,7 @@
 
 session_start();
 
-$pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '', $name);
+$pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '');
 
 $sql = 'SELECT * FROM Users ORder BY name';
 
@@ -11,7 +11,7 @@ $q = $pdo->query($sql);
 $q->setFetchMode(PDO::FETCH_ASSOC);
 
 try {
-    $pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '', $name );
+    $pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '');
 
     $sql = 'SELECT * FROM Users ORder BY name';
 
@@ -22,17 +22,9 @@ try {
     echo $sql . "<br>" . $e->getMessage();
 }
 
-if(isset($_GET['k'])){
-    $k = $_GET['k'];
-    $sql = "SELECT * FROM Users WHERE name LIKE '%$k%'";
-    $q = $pdo->query($sql);
-    $q->setFetchMode(PDO::FETCH_ASSOC);
-}
-
-//create a logic to adding a new user to database
 if(isset($_POST['username']) && isset($_POST['userage'])){
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '', $name );
+        $pdo = new PDO('mysql:host=localhost;dbname=users', 'root', '');
 
         $sql = 'INSERT INTO Users (name, age) VALUES (:username, :userage)';
 
@@ -48,6 +40,31 @@ if(isset($_POST['username']) && isset($_POST['userage'])){
     }
 }
 
+$rowsPerPage = 10;
+$sql = 'SELECT * FROM Users';
+$q = $pdo->query($sql);
+$q->setFetchMode(PDO::FETCH_ASSOC);
+$totalRows = $q->rowCount();
+$totalPages = ceil($totalRows / $rowsPerPage);
+$currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($currentPage - 1) * $rowsPerPage;
+$sql = 'SELECT * FROM Users LIMIT :offset, :rowsPerPage';
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+$stmt->bindValue(":rowsPerPage", $rowsPerPage, PDO::PARAM_INT);
+$stmt->execute();
+$q = $stmt;
+$q->setFetchMode(PDO::FETCH_ASSOC);
+
+if(isset($_POST['search'])){
+    $sql = 'SELECT * FROM Users WHERE name LIKE :search';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(":search", '%' . $_POST['search'] . '%');
+    $stmt->execute();
+    $q = $stmt;
+    $q->setFetchMode(PDO::FETCH_ASSOC);
+}
+
 
 ?>
 
@@ -60,6 +77,12 @@ if(isset($_POST['username']) && isset($_POST['userage'])){
     <title>Document</title>
 </head>
 <body>
+    <?php for($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+    <?php endfor; ?>
+    <br>
+
+
     <form method="POST" action="">
         <table>
             <tr>
@@ -77,10 +100,14 @@ if(isset($_POST['username']) && isset($_POST['userage'])){
         </table>
     </form>
 
-    <form method="GET" name="">
+    <form method="POST" action="">
         <table>
             <tr>
-                <td><input type="text" name="k" value="<?php echo isset($_GET['k']) ? $_GET['k'] : ''; ?>" placeholder="Enter your search keywords" /></td>
+                <td>Search:</td>
+                <td><input type="text" name="search" value="<?php echo isset($_POST['search']) ? $_POST['search'] : ''; ?>" placeholder="Enter your name" /></td>
+            </tr>
+            <tr>
+                <td></td>
                 <td><input type="submit" name="" value="Search" /></td>
             </tr>
         </table>
