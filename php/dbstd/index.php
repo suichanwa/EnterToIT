@@ -75,9 +75,8 @@ if (isset($_POST["username"]) && isset($_POST["userage"])) {
         while($row = $result->fetch()) {
             echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["age"] . "</td></tr>";
         }
-    }
-    catch (PDOException $e) {
-        echo "Database error: " . $e->getMessage();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
     }
 }
 ?>
