@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            clifford: '#da373d',
+          }
+        }
+      }
+    }
+</script>
+</head>
+<body>
+
+
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+  </style>
+
+  <div class="lg:content-auto">
+    <img class="mx-auto" src="https://picsum.photos/200" alt="">
+  </div>
+
+
+
+<button class=" darkMode bg-clifford hover:bg-clifford-dark text-white font-bold py-2 px-4 rounded-full">
+  Dark Mode
+</button>
+
+<!--create a user card with name avatar image and desription and centred on page with dark theme-->
+<div class="bg-clifford-dark text-white font-bold py-2 px-4 rounded-full">
+  <div class="flex flex-col items-center">
+    <img class="rounded-full h-32 w-32" src="https://picsum.photos/200" alt="">
+    <h1 class="text-xl font-bold">John Doe</h1>
+    <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur
+      consectetur, nisi nisl aliquet nisi, eget consectetur nisi nisl eget consectetur consectetur.</p>
+  </div>
+</div>
+
+
+<button class="bg-sky-600 hover:bg-sky-700 ...">
+  Save changes
+</button>
+
+<!--setup automaticaly dark mode for site-->
+<script>
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('darkMode');
+  }
+</script>
+
+
+<!--create a marketing page component that uses a stacked layout on small screens, and a side-by-side layout on larger screens-->
+<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+  <div class="md:flex">
+    <div class="md:shrink-0">
+      <img class="h-48 w-full object-cover md:h-full md:w-48" src="https://picsum.photos/200" alt="Man looking at item at a store">
+    </div>
+    <div class="p-8">
+      <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Case study</div>
+      <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">Finding customers for your new business</a>
+      <p class="mt-2 text-slate-500">Getting a new business off the ground is a lot of hard work. Here are five ideas you can use to find your first customers.</p>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  var darkMode = document.querySelector('.darkMode');
+  darkMode.addEventListener('click', function() {
+    document.body.classList.toggle('bg-gray-900');
+  });
+</script>
+</body>
+</html>
