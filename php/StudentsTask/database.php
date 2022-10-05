@@ -1,24 +1,19 @@
 <?php
 $server = 'localhost';
 $user = 'root';
-$pass = '';
+$pass = 'root';
 $db = 'students';
 
 
-$conn = new mysqli($server, $user, $pass, $db);
-if($conn->connect_error){
-    die('Connection failed: ' . $conn->connect_error);
-} else {
-    //echo 'Connected successfully'; 
-}
-
-
-try{
+function connection_db() {
+    global $server, $user, $pass, $db;
     $conn = new PDO("mysql:host=$server;dbname=$db", $user, $pass);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully " . $db;
+
+    return $conn;
 }
-catch (PDOException $e) {
-    //echo 'Connection failed: ' . $e->getMessage();
-}
+
+$conn = connection_db();
+
+$conn->exec('SET NAMES utf8');
 
