@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+
+    <script src="./demo.js"></script>
+
+
+    <style>
+        body {
+            margin: 15px;
+            padding: 15px;
+        }
+        
+
+        .adding{
+            font-size: 12px;
+            font-weight: 300;   
+            color: darkgreen;
+        }
+    </style>
+
+</head>
+<body> 
+
+    <input type="numb">
+
+    <button type="button" onclick="EnterVar()">Submit</button>
+
+    <script>
+        function EnterVar(){
+            let x = document.getElementById("numb");
+
+            let text;
+
+            if(x.value == none){
+                console.log("enter number");
+            } else {
+                console.log("enter string");
+            }
+
+            document.getElementById("text").innerHTML = text;
+        }
+    </script>
+</body>
+</html>
