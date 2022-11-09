@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
-
+    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.6.1.js">
     <script src="./demo.js"></script>
 
 
@@ -19,7 +19,6 @@
             padding: 15px;
         }
         
-
         .adding{
             font-size: 12px;
             font-weight: 300;   
@@ -29,24 +28,25 @@
 
 </head>
 <body> 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
 
-    <input type="numb">
-
-    <button type="button" onclick="EnterVar()">Submit</button>
-
+    <input id="smle">
+    <button id="clear" onclick="clearConsole()"  >clear</button>
+    <button class ="button" type="button" onclick="EnterVar()">Submit</button>
+    <button id="btn1">btn1</button>
     <script>
         function EnterVar(){
-            let x = document.getElementById("numb");
+            var x = document.getElementById("#smle");
 
-            let text;
+            var text;
 
-            if(x.value == none){
+            if(x == null){
                 console.log("enter number");
             } else {
                 console.log("enter string");
             }
 
-            document.getElementById("text").innerHTML = text;
+            console.log(text);
         }
     </script>
 </body>
