@@ -1,10 +1,7 @@
 'use stric'
-let date = new Date();
 
 let i = 0;
 let fs = require('fs');
-let http = require('http');
-let url = require('url');
 
 setInterval(function(){
     console.log(+i);
