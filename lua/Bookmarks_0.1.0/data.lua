@@ -2,7 +2,8 @@ data:extend({
   {
     type = "custom-input",
     name = "add-to-bookmarks",
-    key_sequence = "A",
-    consuming = "none"
+    key_sequence = "CONTROL + A",
+    consuming = "none",
+    order = "a"
   }
-})  
+})

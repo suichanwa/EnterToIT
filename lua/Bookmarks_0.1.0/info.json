@@ -4,6 +4,6 @@
   "title": "Crafting Bookmarks",
   "author": "YourName",
   "description": "Adds a Bookmarks section to the crafting menu.",
-  "factorio_version": "1.1",
-  "dependencies": ["base >= 1.1"]
+  "factorio_version": "2.0",
+  "dependencies": ["base >= 2.0"]
 }
