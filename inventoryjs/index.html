@@ -6,48 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
-    <link rel="stylesheet" href="https://code.jquery.com/jquery-3.6.1.js">
-    <script src="./demo.js"></script>
-
-
-    <style>
-        body {
-            margin: 15px;
-            padding: 15px;
-        }
-        
-        .adding{
-            font-size: 12px;
-            font-weight: 300;   
-            color: darkgreen;
-        }
-    </style>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body> 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<body>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <script src="./index.js"></script>
 
-    <input id="smle">
-    <button id="clear" onclick="clearConsole()"  >clear</button>
-    <button class ="button" type="button" onclick="EnterVar()">Submit</button>
-    <button id="btn1">btn1</button>
-    <script>
-        function EnterVar(){
-            var x = document.getElementById("#smle");
+    <div class="storage-container">
+        <div class="container">
+            <h2>Storage container</h2>
+            <div class="icons">
+                <img src="icons/icon1.png" alt="icon 1">
+                <img src="icons/icon2.png" alt="icon 2">
+                <img src="icons/icon3.png" alt="icon 3">
+                <img src="icons/icon4.png" alt="icon 4">
+            </div>
+        </div>
+    </div>
 
-            var text;
+    <div class="storage-container">
+        <div class="container">
+            <h2>Inventory</h2>
+        </div>
 
-            if(x == null){
-                console.log("enter number");
-            } else {
-                console.log("enter string");
-            }
-
-            console.log(text);
-        }
-    </script>
+        <div class="free-slots container">
+            <div class="slot" data-slot="1"></div>
+            <div class="slot" data-slot="2"></div>
+            <div class="slot" data-slot="3"></div>
+            <div class="slot" data-slot="4"></div>
+        </div>
+    </div>
 </body>
 </html>

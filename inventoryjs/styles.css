@@ -1,0 +1,53 @@
+.storage-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.storage-container .icons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.storage-container .icons img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.storage-container .icons img:hover {
+    transform: scale(1.1);
+}
+
+
+
+.free-slots {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.slot {
+    width: 72px;
+    height: 72px;
+    border: 2px dashed #888;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slot img {
+    width: 64px;
+    height: 64px;
+    cursor: grab;
+}
+
+.container{
+    margin: 20px;
+}

@@ -35,8 +35,6 @@ function run(){
     persons.push(employeeFactory.create("some name"));
     persons.push(vendorFactory.create("some name"));
 
-    //id why he crushed here
-
     for(var i = 0, len = persons.length; i < len; i++){
         persons[i].say();
     } 
