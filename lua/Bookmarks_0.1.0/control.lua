@@ -7,11 +7,8 @@ script.on_init(function()
   global.bookmarks = {}
 end)
 
-script.on_load(function()
-  -- nothing to do here
-end)
+script.on_load(function() end)
 
--- Show Bookmarks frame when player inventory opens
 script.on_event(defines.events.on_gui_opened, function(event)
   if event.gui_type ~= defines.gui_type.entity then return end
   local player = game.players[event.player_index]
