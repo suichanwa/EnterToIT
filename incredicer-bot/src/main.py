@@ -1,13 +1,14 @@
 import time
+import pyautogui
 from screen import grab_center_region
 from detector import detect_dice
 from mouse import hover
 from hotkeys import init_hotkeys
 from config import SCAN_WIDTH, SCAN_HEIGHT, SCAN_DELAY
-from ui_detector import click_skill_tree
+from ui_detector import click_skill_tree, upgrade_affordable_skills
 
 enabled = False 
-last_dice_pos = None  # Track last dice position
+last_dice_pos = None 
 MIN_DISTANCE = 50  # Reduced from 80 - allow clicking closer dice
 
 # Mode selection
@@ -93,6 +94,46 @@ def run_skill_tree_mode():
     print("[MODE 1] Test complete. Exiting...")
 
 
+def run_skill_upgrade_mode():
+    """Mode 2: Open skill tree and upgrade affordable skills"""
+    print("[MODE 2] Starting smart skill upgrade mode...")
+    print("[MODE 2] Waiting 3 seconds...")
+    time.sleep(3)
+    
+    # Step 1: Open skill tree
+    print("[MODE 2] Opening skill tree...")
+    if not click_skill_tree():
+        print("[MODE 2] Failed to open skill tree. Exiting...")
+        return
+    
+    # Wait for skill tree to open
+    time.sleep(2)
+    
+    # Step 2: Upgrade affordable skills only (will continue until no more affordable skills)
+    print("[MODE 2] Looking for affordable skills...")
+    upgraded_count = upgrade_affordable_skills()
+    
+    if upgraded_count > 0:
+        print(f"[MODE 2] Successfully upgraded {upgraded_count} skills!")
+    else:
+        print("[MODE 2] No affordable skills to upgrade")
+    
+    # Step 3: Close skill tree
+    print("[MODE 2] Closing skill tree...")
+    time.sleep(1)
+    
+    # The X button is in the top-right corner
+    screen_w, screen_h = pyautogui.size()
+    close_x = int(screen_w * 0.95)
+    close_y = int(screen_h * 0.05)
+    
+    print(f"[MODE 2] Clicking close button at ({close_x}, {close_y})")
+    pyautogui.click(close_x, close_y)
+    time.sleep(0.5)
+    
+    print("[MODE 2] Skill upgrade complete! Skill tree closed.")
+
+
 # Main entry point
 print("[INIT] Starting Incredicer bot...")
 print("[INIT] F8 → Toggle ON / OFF")
@@ -102,15 +143,16 @@ print("=" * 50)
 print("SELECT MODE:")
 print("  0 - Dice clicking mode (default)")
 print("  1 - Skill tree test mode")
+print("  2 - Auto skill upgrade mode")
 print("=" * 50)
 
 while MODE is None:
     try:
-        mode_input = input("Enter mode (0 or 1): ").strip()
-        if mode_input in ['0', '1']:
+        mode_input = input("Enter mode (0, 1, or 2): ").strip()
+        if mode_input in ['0', '1', '2']:
             MODE = int(mode_input)
         else:
-            print("Invalid input. Please enter 0 or 1.")
+            print("Invalid input. Please enter 0, 1, or 2.")
     except (ValueError, KeyboardInterrupt):
         print("\nDefaulting to mode 0")
         MODE = 0
@@ -127,3 +169,5 @@ if MODE == 0:
     run_dice_mode()
 elif MODE == 1:
     run_skill_tree_mode()
+elif MODE == 2:
+    run_skill_upgrade_mode()
