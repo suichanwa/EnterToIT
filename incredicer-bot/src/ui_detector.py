@@ -5,7 +5,7 @@ import pytesseract
 import time
 import win32api
 import win32con
-import re
+from utils.currency import read_dark_matter, read_currency_from_tooltip
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -129,7 +129,6 @@ def click_skill_tree():
     Find and click the skill tree button.
     Returns True if successful, False otherwise.
     """
-    
     pos = find_skill_tree_button()
     
     if pos:
@@ -146,7 +145,6 @@ def click_skill_tree():
         time.sleep(0.3)
         
         print(f"[UI] Performing Windows API click...")
-        # Use Windows API click instead of pyautogui
         win32_click(x, y)
         
         time.sleep(0.5)
@@ -155,61 +153,6 @@ def click_skill_tree():
         return True
     
     return False
-
-
-def find_skill_nodes():
-    """
-    Find clickable skill nodes in the skill tree.
-    Returns list of (x, y) coordinates of skill nodes.
-    """
-    # Capture full screen
-    screenshot = pyautogui.screenshot()
-    screenshot_np = np.array(screenshot)
-    
-    # Convert to grayscale
-    gray = cv2.cvtColor(screenshot_np, cv2.COLOR_RGB2GRAY)
-    
-    # Apply threshold to find dark skill nodes (they appear darker than background)
-    _, thresh = cv2.threshold(gray, 80, 255, cv2.THRESH_BINARY_INV)
-    
-    # Find contours
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    
-    skill_nodes = []
-    
-    for contour in contours:
-        area = cv2.contourArea(contour)
-        
-        # Skill nodes should be reasonably sized (adjust based on your screen resolution)
-        if 800 < area < 3000:
-            x, y, w, h = cv2.boundingRect(contour)
-            
-            # Check if it's roughly square (skill nodes appear square-ish)
-            aspect_ratio = w / h if h > 0 else 0
-            if 0.7 < aspect_ratio < 1.3:
-                # Calculate center
-                center_x = x + w // 2
-                center_y = y + h // 2
-                
-                # Check if node has the characteristic appearance
-                roi = gray[y:y+h, x:x+w]
-                if roi.size > 0:
-                    # Skill nodes have dark borders and specific interior pattern
-                    mean_brightness = np.mean(roi)
-                    
-                    # Look for nodes that are darker than background
-                    if mean_brightness < 120:
-                        skill_nodes.append((center_x, center_y))
-                        print(f"[SKILL] Found skill node at ({center_x}, {center_y})")
-    
-    # Save debug image
-    debug_img = screenshot_np.copy()
-    for x, y in skill_nodes:
-        cv2.circle(debug_img, (x, y), 20, (0, 255, 0), 2)
-    cv2.imwrite('skill_nodes_detected.png', cv2.cvtColor(debug_img, cv2.COLOR_RGB2BGR))
-    print(f"[SKILL] Found {len(skill_nodes)} skill nodes. Debug image saved to skill_nodes_detected.png")
-    
-    return skill_nodes
 
 
 def find_clickable_skill_nodes():
@@ -277,191 +220,88 @@ def click_skill_node(x, y):
     print(f"[SKILL] Skill node clicked")
 
 
-def upgrade_available_skills():
-    """
-    Find and click all available skill upgrades.
-    Returns number of skills upgraded.
-    """
-    print("[SKILL] Searching for upgradeable skills...")
-    
-    clickable_nodes = find_clickable_skill_nodes()
-    
-    if not clickable_nodes:
-        print("[SKILL] No upgradeable skills found")
-        return 0
-    
-    print(f"[SKILL] Found {len(clickable_nodes)} upgradeable skills")
-    
-    for i, (x, y) in enumerate(clickable_nodes, 1):
-        print(f"[SKILL] Upgrading skill {i}/{len(clickable_nodes)}...")
-        click_skill_node(x, y)
-        time.sleep(0.5)
-    
-    return len(clickable_nodes)
-
-
-def read_currency_amount():
-    """
-    Read the currency/money amount from the top-left corner of the screen.
-    Returns the amount as an integer, or None if not found.
-    """
-    # Capture full screen
-    screenshot = pyautogui.screenshot()
-    screenshot_np = np.array(screenshot)
-    
-    # Convert to grayscale
-    gray = cv2.cvtColor(screenshot_np, cv2.COLOR_RGB2GRAY)
-    
-    screen_w, screen_h = pyautogui.size()
-    
-    # Currency is typically in top-left corner (look for the dice icon)
-    search_x = 0
-    search_y = 0
-    search_width = int(screen_w * 0.2)  # Left 20% of screen
-    search_height = int(screen_h * 0.15)   # Top 15% of screen
-    
-    roi = gray[search_y:search_y+search_height, search_x:search_x+search_width]
-    
-    # Apply threshold to isolate white/light text
-    _, thresh = cv2.threshold(roi, 180, 255, cv2.THRESH_BINARY)
-    
-    # Save debug image
-    cv2.imwrite('currency_detection.png', thresh)
-    print("[CURRENCY] Debug image saved to currency_detection.png")
-    
-    # Use tesseract to detect text
-    text = pytesseract.image_to_string(thresh, config='--psm 6')
-    
-    print(f"[CURRENCY] Raw OCR text: '{text}'")
-    
-    # Extract all numbers from text
-    numbers = re.findall(r'\d+', text.replace(',', '').replace(' ', ''))
-    
-    if numbers:
-        # Take the largest number found (likely the currency amount)
-        amounts = [int(n) for n in numbers]
-        currency = max(amounts)
-        print(f"[CURRENCY] Detected currency: {currency}")
-        return currency
-    
-    print("[CURRENCY] Could not detect currency amount")
-    return None
-
-
 def get_skill_cost(x, y):
     """
     Hover over a skill node and read its cost from the tooltip.
-    The tooltip shows cost in format: "cost / current_money" in red at the bottom.
-    Returns (cost, description) tuple, or (None, None) if not readable.
+    The tooltip shows cost in format: "cost / current_dark_matter" in red at the bottom.
+    Returns (cost, current_dark_matter) tuple, or (None, None) if not readable.
     """
     print(f"[COST] Hovering over skill at ({x}, {y}) to read cost...")
     
     # Move to skill node
     pyautogui.moveTo(x, y, duration=0.3)
-    time.sleep(0.8)  # Wait for tooltip to appear
+    time.sleep(1.0)  # Wait for tooltip to appear
     
     # Capture screen
     screenshot = pyautogui.screenshot()
     screenshot_np = np.array(screenshot)
     screen_h, screen_w, _ = screenshot_np.shape
     
-    # Tooltip appears centered on screen, search in the center area
-    # Based on the image, tooltip is roughly 800x400 pixels
+    # Tooltip appears centered on screen
     tooltip_width = 900
-    tooltip_height = 450
+    tooltip_height = 500
     tooltip_x = max(0, (screen_w // 2) - (tooltip_width // 2))
     tooltip_y = max(0, (screen_h // 2) - (tooltip_height // 2))
     
     # Extract tooltip region
     roi = screenshot_np[tooltip_y:tooltip_y+tooltip_height, tooltip_x:tooltip_x+tooltip_width]
     
-    # Convert to grayscale
-    gray = cv2.cvtColor(roi, cv2.COLOR_RGB2GRAY)
-    
     # Save color version for debugging
     cv2.imwrite(f'tooltip_color_{x}_{y}.png', cv2.cvtColor(roi, cv2.COLOR_RGB2BGR))
     
-    # The cost is in RED color at the bottom. Let's extract red text specifically
-    roi_hsv = cv2.cvtColor(roi, cv2.COLOR_RGB2HSV)
-    
-    # Define red color range
-    lower_red1 = np.array([0, 100, 100])
-    upper_red1 = np.array([10, 255, 255])
-    lower_red2 = np.array([160, 100, 100])
-    upper_red2 = np.array([180, 255, 255])
-    
-    # Create masks for red color
-    mask1 = cv2.inRange(roi_hsv, lower_red1, upper_red1)
-    mask2 = cv2.inRange(roi_hsv, lower_red2, upper_red2)
-    red_mask = cv2.bitwise_or(mask1, mask2)
-    
-    # Also try with white text (for the description)
-    _, white_thresh = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY)
+    # Use currency module to extract cost and current amount
+    cost, current_dark_matter = read_currency_from_tooltip(roi)
     
     # Save debug images
-    cv2.imwrite(f'tooltip_red_{x}_{y}.png', red_mask)
+    gray = cv2.cvtColor(roi, cv2.COLOR_RGB2GRAY)
+    _, white_thresh = cv2.threshold(gray, 180, 255, cv2.THRESH_BINARY)
     cv2.imwrite(f'tooltip_white_{x}_{y}.png', white_thresh)
     
-    # Read red text (cost information)
-    red_text = pytesseract.image_to_string(red_mask, config='--psm 6')
-    print(f"[COST] Red text (cost): '{red_text}'")
-    
-    # Read white text (skill description)
-    white_text = pytesseract.image_to_string(white_thresh, config='--psm 6')
-    print(f"[COST] White text (description): '{white_text}'")
-    
-    # Parse cost from red text - format is "cost / current_money"
-    # Example: "30 / 169"
-    cost_match = re.search(r'(\d+)\s*/\s*(\d+)', red_text.replace(',', ''))
-    
-    if cost_match:
-        cost = int(cost_match.group(1))
-        current_money_in_tooltip = int(cost_match.group(2))
-        print(f"[COST] Detected cost: {cost} (tooltip shows current money: {current_money_in_tooltip})")
-        
-        # Extract skill description from white text
-        description = white_text.strip()
-        
-        return cost, description
-    
-    # Fallback: try to find any numbers in the text
-    numbers = re.findall(r'\d+', red_text.replace(',', ''))
-    if len(numbers) >= 1:
-        cost = int(numbers[0])
-        print(f"[COST] Detected cost (fallback): {cost}")
-        return cost, white_text.strip()
-    
-    print("[COST] Could not detect cost from tooltip")
-    return None, None
+    return cost, current_dark_matter
 
 
-def find_affordable_skill_nodes(current_money):
+def find_affordable_skill_nodes():
     """
-    Find skill nodes that can be afforded with current money.
-    Returns list of (x, y, cost, description) tuples sorted by cost (cheapest first).
+    Find skill nodes that can be afforded with current dark matter.
+    Reads dark matter from UI and tooltip.
+    Returns tuple of (affordable_skills list, current_dark_matter).
     """
-    print(f"[AFFORD] Finding skills affordable with {current_money} currency...")
+    print(f"[AFFORD] Finding affordable skills...")
+    
+    # First, try to read dark matter from UI
+    current_dark_matter = read_dark_matter()
+    
+    if current_dark_matter is not None:
+        print(f"[AFFORD] Current dark matter from UI: {current_dark_matter}")
     
     # Get all clickable nodes (with yellow indicators)
     clickable_nodes = find_clickable_skill_nodes()
     
     if not clickable_nodes:
         print("[AFFORD] No clickable nodes found")
-        return []
+        return [], current_dark_matter
     
     affordable_skills = []
     
     for x, y in clickable_nodes:
-        cost, description = get_skill_cost(x, y)
+        cost, dark_matter_from_tooltip = get_skill_cost(x, y)
+        
+        # Update current_dark_matter from tooltip if we got it
+        if dark_matter_from_tooltip is not None:
+            current_dark_matter = dark_matter_from_tooltip
+            print(f"[AFFORD] Current dark matter from tooltip: {current_dark_matter}")
         
         if cost is not None:
-            if cost <= current_money:
-                affordable_skills.append((x, y, cost, description))
-                print(f"[AFFORD] ✓ Skill at ({x}, {y}) costs {cost} - AFFORDABLE")
-                if description:
-                    print(f"         Description: {description[:50]}...")
+            if current_dark_matter is not None:
+                if cost <= current_dark_matter:
+                    affordable_skills.append((x, y, cost))
+                    print(f"[AFFORD] ✓ Skill at ({x}, {y}) costs {cost} dark matter - AFFORDABLE")
+                else:
+                    print(f"[AFFORD] ✗ Skill at ({x}, {y}) costs {cost} dark matter - TOO EXPENSIVE (have {current_dark_matter})")
             else:
-                print(f"[AFFORD] ✗ Skill at ({x}, {y}) costs {cost} - TOO EXPENSIVE")
+                # If we don't know current dark matter yet, add it anyway
+                affordable_skills.append((x, y, cost))
+                print(f"[AFFORD] ? Skill at ({x}, {y}) costs {cost} dark matter - amount unknown, will attempt")
         else:
             print(f"[AFFORD] ? Skill at ({x}, {y}) - cost unknown, skipping")
     
@@ -469,64 +309,53 @@ def find_affordable_skill_nodes(current_money):
     affordable_skills.sort(key=lambda s: s[2])
     
     print(f"[AFFORD] Found {len(affordable_skills)} affordable skills")
-    return affordable_skills
+    return affordable_skills, current_dark_matter
 
 
 def upgrade_affordable_skills():
     """
-    Read current money, find affordable skills, and upgrade them.
+    Read current dark matter, find affordable skills, and upgrade them.
     Stops when no more affordable skills are available.
     Returns number of skills upgraded.
     """
     print("[UPGRADE] Starting smart upgrade process...")
-    
-    # Step 1: Read current currency
-    current_money = read_currency_amount()
-    
-    if current_money is None:
-        print("[UPGRADE] ERROR: Could not read currency amount")
-        return 0
-    
-    print(f"[UPGRADE] Current money: {current_money}")
+    print("[UPGRADE] Note: Skills are purchased with DARK MATTER, not money")
     
     upgraded_count = 0
-    remaining_money = current_money
     consecutive_failures = 0
     max_failures = 2  # Stop after 2 consecutive rounds with no purchases
     
     # Keep trying to upgrade until we can't afford anything
     while consecutive_failures < max_failures:
         print(f"\n[UPGRADE] === Upgrade Round {upgraded_count + 1} ===")
-        print(f"[UPGRADE] Money available: {remaining_money}")
         
-        # Step 2: Find affordable skills
-        affordable_skills = find_affordable_skill_nodes(remaining_money)
+        # Find affordable skills (this will read dark matter from UI and tooltips)
+        affordable_skills, current_dark_matter = find_affordable_skill_nodes()
+        
+        if current_dark_matter is not None:
+            print(f"[UPGRADE] Current dark matter: {current_dark_matter}")
         
         if not affordable_skills:
             print("[UPGRADE] No affordable skills found in this round")
             consecutive_failures += 1
             continue
         
-        # Step 3: Purchase affordable skills (cheapest first)
+        # Purchase affordable skills (cheapest first)
         purchased_this_round = 0
         
-        for x, y, cost, description in affordable_skills:
-            if cost > remaining_money:
-                print(f"[UPGRADE] Stopping - not enough money for skill costing {cost}")
-                break
-            
-            print(f"[UPGRADE] Purchasing skill at ({x}, {y}) for {cost}...")
-            if description:
-                print(f"[UPGRADE] Effect: {description[:80]}")
+        for x, y, cost in affordable_skills:
+            print(f"[UPGRADE] Purchasing skill at ({x}, {y}) for {cost} dark matter...")
             
             click_skill_node(x, y)
             
-            remaining_money -= cost
+            if current_dark_matter is not None:
+                current_dark_matter -= cost
+                print(f"[UPGRADE] Dark matter remaining: ~{current_dark_matter}")
+            
             upgraded_count += 1
             purchased_this_round += 1
-            print(f"[UPGRADE] Money remaining: {remaining_money}")
             
-            time.sleep(0.8)  # Wait for purchase animation
+            time.sleep(1.0)  # Wait for purchase animation
         
         if purchased_this_round == 0:
             consecutive_failures += 1
@@ -538,7 +367,5 @@ def upgrade_affordable_skills():
     
     print(f"\n[UPGRADE] === Upgrade Complete ===")
     print(f"[UPGRADE] Total skills upgraded: {upgraded_count}")
-    print(f"[UPGRADE] Money spent: {current_money - remaining_money}")
-    print(f"[UPGRADE] Money remaining: {remaining_money}")
     
     return upgraded_count
