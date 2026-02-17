@@ -2,7 +2,6 @@ It seems the file system tools aren't cooperating right now. No problem — here
 
 ---
 
-````markdown
 # C# Exam Prep Plan — 2 Days to Prove the Teacher Wrong
 
 > **Context:** 6 years TypeScript/Node experience. Last touched C# ~5 years ago.  
@@ -909,7 +908,6 @@ Practice these without looking — highest exam probability:
 ---
 
 *Good luck Friday. You got this.*
-````
 
 ---
 
